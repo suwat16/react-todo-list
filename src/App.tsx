@@ -1,35 +1,18 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import TodoList from "./components/todo-list";
+import InputTodo from "./components/input-todo";
 
 function App() {
-  const [todoInput, setTodoInput] = useState<string>("");
   const [todoList, setTodoList] = useState<string[]>([]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    setTodoList([...todoList, todoInput]);
+  const handleTodoInput = (todo: string) => {
+    setTodoList([...todoList, todo]);
   };
 
   return (
     <>
-      <div>
-        <form onSubmit={handleSubmit}>
-          <label>Todo List</label>
-          <br />
-          <input
-            type="text"
-            value={todoInput}
-            onChange={(e) => setTodoInput(e.target.value)}
-          />
-
-          <button type="submit">Add</button>
-        </form>
-        <ul>
-          {todoList.map((todo, index) => (
-            <li key={index}>{todo}</li>
-          ))}
-        </ul>
-      </div>
+      <InputTodo onTodoInput={handleTodoInput} />
+      <TodoList todoList={todoList} />
     </>
   );
 }
