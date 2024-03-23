@@ -11,8 +11,18 @@ function App() {
 
   return (
     <>
-      <InputTodo onTodoInput={handleTodoInput} />
-      <TodoList todoList={todoList} />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <InputTodo onTodoInput={handleTodoInput} />
+        <br />
+        <br />
+        <TodoList todoList={todoList} />
+      </div>
     </>
   );
 }
