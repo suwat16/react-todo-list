@@ -13,6 +13,29 @@ function App() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (!todoInput) {
+      return;
+    }
+
+    if (isEditTodo) {
+      const newTodoList = todoList.map((v) => {
+        if (v.todoValue === todoInput) {
+          return {
+            ...v,
+            todoValue: todoInput,
+          };
+        }
+        return v;
+      });
+
+      console.log(newTodoList);
+
+      setTodoList(newTodoList);
+      setIsEditTodo(false);
+      setTodoInput("");
+      return;
+    }
+
     const todoInputData: ITodo = {
       index: new Date().valueOf(),
       todoValue: todoInput,
@@ -20,6 +43,8 @@ function App() {
 
     setTodoList([...todoList, todoInputData]);
     setIsEditTodo(false);
+    setTodoInput("");
+    return;
   };
 
   const handleEdit = (index: number) => {
