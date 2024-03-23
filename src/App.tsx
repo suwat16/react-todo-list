@@ -12,7 +12,13 @@ function App() {
 
   return (
     <>
-      <div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <form onSubmit={handleSubmit}>
           <label>Todo List</label>
           <br />
@@ -24,11 +30,16 @@ function App() {
 
           <button type="submit">Add</button>
         </form>
-        <ul>
-          {todoList.map((todo, index) => (
-            <li key={index}>{todo}</li>
-          ))}
-        </ul>
+
+        {todoList.map((todoValue, index) => {
+          return (
+            <div key={index}>
+              <h1>{todoValue}</h1>
+              <button>edit</button>
+              <button>delete</button>
+            </div>
+          );
+        })}
       </div>
     </>
   );
