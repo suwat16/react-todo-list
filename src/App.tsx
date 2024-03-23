@@ -55,33 +55,31 @@ function App() {
   };
 
   return (
-    <>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
-        }}
-      >
-        <form onSubmit={handleSubmit}>
-          <label>Todo List</label>
-          <br />
-          <input type="text" name="todo" ref={inputRef} />
-          <button type="submit">{isEditTodo ? "Edit" : "Submit"}</button>
-        </form>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+      }}
+    >
+      <form onSubmit={handleSubmit}>
+        <label>Todo List</label>
         <br />
-        {todoList.map((value) => {
-          return (
-            <div key={value.index}>
-              {value.todoValue}
-              <button onClick={() => handleEdit(value.index)}>edit</button>
-              <button onClick={() => handleDelete(value.index)}>delete</button>
-            </div>
-          );
-        })}
-      </div>
-    </>
+        <input type="text" name="todo" ref={inputRef} />
+        <button type="submit">{isEditTodo ? "Edit" : "Submit"}</button>
+      </form>
+      <br />
+      {todoList.map((value) => {
+        return (
+          <div key={value.index}>
+            {value.todoValue}
+            <button onClick={() => handleEdit(value.index)}>edit</button>
+            <button onClick={() => handleDelete(value.index)}>delete</button>
+          </div>
+        );
+      })}
+    </div>
   );
 }
 
