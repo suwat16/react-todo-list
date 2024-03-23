@@ -6,20 +6,19 @@ interface ITodo {
 }
 
 function App() {
-  const [todoInput, setTodoInput] = useState<string>();
+  const [todoValue, setTodoValue] = useState<ITodo>();
   const [todoList, setTodoList] = useState<ITodo[]>([]);
   const [isEditTodo, setIsEditTodo] = useState<boolean>(false);
 
+  const inputRef = React.useRef<HTMLInputElement>(null);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!todoInput) {
-      return;
-    }
+    const todoInput = inputRef.current?.value;
 
     if (isEditTodo) {
       const newTodoList = todoList.map((v) => {
-        if (v.todoValue === todoInput) {
+        if (v.index === todoValue?.index) {
           return {
             ...v,
             todoValue: todoInput,
@@ -28,11 +27,9 @@ function App() {
         return v;
       });
 
-      console.log(newTodoList);
-
       setTodoList(newTodoList);
       setIsEditTodo(false);
-      setTodoInput("");
+      inputRef.current!.value = "";
       return;
     }
 
@@ -43,13 +40,14 @@ function App() {
 
     setTodoList([...todoList, todoInputData]);
     setIsEditTodo(false);
-    setTodoInput("");
+    inputRef.current!.value = "";
     return;
   };
 
   const handleEdit = (index: number) => {
     const findTodo = todoList.find((v) => v.index === index);
-    setTodoInput(findTodo?.todoValue);
+    inputRef.current!.value = findTodo?.todoValue || "";
+    setTodoValue(findTodo);
     setIsEditTodo(true);
   };
 
@@ -71,12 +69,7 @@ function App() {
         <form onSubmit={handleSubmit}>
           <label>Todo List</label>
           <br />
-          <input
-            type="text"
-            value={todoInput}
-            onChange={(e) => setTodoInput(e.target.value)}
-          />
-
+          <input type="text" ref={inputRef} />
           <button type="submit">{isEditTodo ? "Edit" : "Submit"}</button>
         </form>
         <br />
