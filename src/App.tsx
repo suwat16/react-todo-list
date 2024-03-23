@@ -17,6 +17,7 @@ function App() {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          flexDirection: "column",
         }}
       >
         <form onSubmit={handleSubmit}>
@@ -30,13 +31,13 @@ function App() {
 
           <button type="submit">Add</button>
         </form>
-
+        <br />
         {todoList.map((todoValue, index) => {
           return (
             <div key={index}>
-              <h1>{todoValue}</h1>
-              <button>edit</button>
-              <button>delete</button>
+              {todoValue}
+              <button onClick={() => console.log("edit")}>edit</button>
+              <button onClick={() => console.log("delete")}>delete</button>
             </div>
           );
         })}
