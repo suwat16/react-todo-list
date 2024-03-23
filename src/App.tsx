@@ -1,26 +1,37 @@
 import React, { useState } from "react";
 
+interface ITodo {
+  index: number;
+  todoValue: string | undefined;
+}
+
 function App() {
-  const [todoInput, setTodoInput] = useState<string>("");
-  const [todoList, setTodoList] = useState<string[]>([]);
+  const [todoInput, setTodoInput] = useState<string>();
+  const [todoList, setTodoList] = useState<ITodo[]>([]);
   const [isEditTodo, setIsEditTodo] = useState<boolean>(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setTodoList([...todoList, todoInput]);
+
+    const todoInputData: ITodo = {
+      index: new Date().valueOf(),
+      todoValue: todoInput,
+    };
+
+    setTodoList([...todoList, todoInputData]);
     setIsEditTodo(false);
   };
 
   const handleEdit = (index: number) => {
-    console.log(index);
-    setTodoInput(todoList[index]);
+    const findTodo = todoList.find((v) => v.index === index);
+    setTodoInput(findTodo?.todoValue);
     setIsEditTodo(true);
   };
 
   const handleDelete = (index: number) => {
-    const newTodoList = todoList.filter((_, i) => i !== index);
+    const newTodoList = todoList.filter((v) => v.index !== index);
     setTodoList(newTodoList);
-  }
+  };
 
   return (
     <>
@@ -41,15 +52,15 @@ function App() {
             onChange={(e) => setTodoInput(e.target.value)}
           />
 
-          <button type="submit">{isEditTodo ? "Edit" : "Add"}</button>
+          <button type="submit">{isEditTodo ? "Edit" : "Submit"}</button>
         </form>
         <br />
-        {todoList.map((todoValue, index) => {
+        {todoList.map((value) => {
           return (
-            <div key={index}>
-              {todoValue}
-              <button onClick={() => handleEdit(index)}>edit</button>
-              <button onClick={() => handleDelete(index)}>delete</button>
+            <div key={value.index}>
+              {value.todoValue}
+              <button onClick={() => handleEdit(value.index)}>edit</button>
+              <button onClick={() => handleDelete(value.index)}>delete</button>
             </div>
           );
         })}
