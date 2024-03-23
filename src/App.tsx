@@ -6,9 +6,8 @@ interface ITodo {
 }
 
 function App() {
-  const [todoValue, setTodoValue] = useState<ITodo>();
   const [todoList, setTodoList] = useState<ITodo[]>([]);
-  const [isEditTodo, setIsEditTodo] = useState<boolean>(false);
+  const [isEditTodo, setIsEditTodo] = useState<ITodo>();
 
   const inputRef = React.useRef<HTMLInputElement>(null);
 
@@ -18,7 +17,7 @@ function App() {
 
     if (isEditTodo) {
       const newTodoList = todoList.map((v) => {
-        if (v.index === todoValue?.index) {
+        if (v.index === isEditTodo.index) {
           return {
             ...v,
             todoValue: todoInput,
@@ -28,7 +27,7 @@ function App() {
       });
 
       setTodoList(newTodoList);
-      setIsEditTodo(false);
+      setIsEditTodo(undefined);
       inputRef.current!.value = "";
       return;
     }
@@ -39,7 +38,7 @@ function App() {
     };
 
     setTodoList([...todoList, todoInputData]);
-    setIsEditTodo(false);
+    setIsEditTodo(undefined);
     inputRef.current!.value = "";
     return;
   };
@@ -47,8 +46,7 @@ function App() {
   const handleEdit = (index: number) => {
     const findTodo = todoList.find((v) => v.index === index);
     inputRef.current!.value = findTodo?.todoValue || "";
-    setTodoValue(findTodo);
-    setIsEditTodo(true);
+    setIsEditTodo(findTodo);
   };
 
   const handleDelete = (index: number) => {
@@ -69,7 +67,7 @@ function App() {
         <form onSubmit={handleSubmit}>
           <label>Todo List</label>
           <br />
-          <input type="text" ref={inputRef} />
+          <input type="text" name="todo" ref={inputRef} />
           <button type="submit">{isEditTodo ? "Edit" : "Submit"}</button>
         </form>
         <br />
