@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 
 const InputTodo = ({
-  onTodoInput,
+  getInputSubmit,
 }: {
-  onTodoInput: (todo: string) => void;
+  getInputSubmit: (input: string) => void;
 }) => {
-  const [todoInput, setTodoInput] = useState<string>("");
+  const inputRefs = React.useRef<{ [key: string]: HTMLInputElement | null }>(
+    {}
+  );
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onTodoInput(todoInput);
+    getInputSubmit(inputRefs.current["todoInput"]?.value || "");
+    // onTodoInput(todoInput);
   };
 
   return (
@@ -18,11 +21,10 @@ const InputTodo = ({
         <label>Todo List</label>
         <br />
         <input
+          ref={(ref) => (inputRefs.current["todoInput"] = ref)}
           type="text"
-          value={todoInput}
-          onChange={(e) => setTodoInput(e.target.value)}
+          name="todoInput"
         />
-
         <button type="submit">Add</button>
       </form>
     </div>
