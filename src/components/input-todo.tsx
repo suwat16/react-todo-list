@@ -29,6 +29,7 @@ const InputTodo = ({
 
     submit(newTodo);
     inputRef.current!.value = "";
+    return;
   };
 
   return (

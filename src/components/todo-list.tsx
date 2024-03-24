@@ -12,11 +12,13 @@ const TodoList = ({
   const handleEdit = (index: number) => {
     const todo = todoList.find((todo) => todo.index === index);
     editItem(todo!);
+    return;
   };
 
   const handleDelete = (index: number) => {
     const newTodoList = todoList.filter((todo) => todo.index !== index);
     removeTodo(newTodoList);
+    return;
   };
 
   return (

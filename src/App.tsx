@@ -29,15 +29,18 @@ function App() {
     }
 
     setTodoList([...todoList, input]);
+    return;
   };
 
   const onTodoRemove = (todoList: ITodo[]) => {
     setTodoList(todoList);
+    return;
   };
 
   const onTodoEdit = (todo: ITodo) => {
     setIsEditTodo(todo);
     inputRef.current!.value = todo.todoValue || "";
+    return;
   };
 
   return (
