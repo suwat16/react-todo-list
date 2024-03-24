@@ -12,7 +12,6 @@ const InputTodo = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     getInputSubmit(inputRefs.current["todoInput"]?.value || "");
-    // onTodoInput(todoInput);
   };
 
   return (

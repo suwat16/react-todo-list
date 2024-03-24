@@ -1,11 +1,14 @@
-const TodoList = ({ todoList }: { todoList: string[] }) => {
+import { ITodo } from "../App";
+
+const TodoList = ({ todoList }: { todoList: ITodo[] }) => {
   return (
     <div>
-      {todoList.map((todoValue, index) => (
-        <div key={index + 1} >
-            {todoValue}
-            <button onClick={() => console.log('Edit')}>Edit</button>
-            <button onClick={() => console.log('Delete')}>Delete</button>
+      <br />
+      {todoList.map((todo) => (
+        <div key={todo.index}>
+          {todo.todoValue}
+          <button onClick={() => console.log("Edit")}>Edit</button>
+          <button onClick={() => console.log("Delete")}>Delete</button>
         </div>
       ))}
     </div>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import InputTodo from "./components/input-todo";
+import TodoList from "./components/todo-list";
 
 export interface ITodo {
   index: number;
@@ -26,13 +27,7 @@ function App() {
       }}
     >
       <InputTodo getInputSubmit={onTodoInput} />
-      <br />
-      {todoList.map((todo) => (
-        <div key={todo.index}>
-          <span>{todo.todoValue}</span>
-        </div>
-      ))}
-      {/* <TodoList todoList={todoList} /> */}
+      <TodoList todoList={todoList} />
     </div>
   );
 }
