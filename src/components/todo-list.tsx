@@ -2,13 +2,16 @@ import { ITodo } from "../App";
 
 const TodoList = ({
   todoList,
+  editItem,
   removeTodo,
 }: {
   todoList: ITodo[];
+  editItem: (todo: ITodo) => void;
   removeTodo: (todo: ITodo[]) => void;
 }) => {
   const handleEdit = (index: number) => {
-    console.log("Edit", index);
+    const todo = todoList.find((todo) => todo.index === index);
+    editItem(todo!);
   };
 
   const handleDelete = (index: number) => {

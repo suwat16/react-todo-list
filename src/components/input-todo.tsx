@@ -1,17 +1,25 @@
 import React from "react";
+import { ITodo } from "../App";
 
 const InputTodo = ({
-  getInputSubmit,
+  submit,
+  editItem,
 }: {
-  getInputSubmit: (input: string) => void;
+  submit: (input: ITodo) => void;
+  editItem: ITodo | undefined;
 }) => {
-  const inputRefs = React.useRef<{ [key: string]: HTMLInputElement | null }>(
-    {}
-  );
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    getInputSubmit(inputRefs.current["todoInput"]?.value || "");
+
+    const newTodo: ITodo = {
+      index: new Date().valueOf(),
+      todoValue: inputRef.current?.value || "",
+    };
+
+    submit(newTodo);
+    inputRef.current!.value = "";
   };
 
   return (
@@ -19,12 +27,8 @@ const InputTodo = ({
       <form onSubmit={handleSubmit}>
         <label>Todo List</label>
         <br />
-        <input
-          ref={(ref) => (inputRefs.current["todoInput"] = ref)}
-          type="text"
-          name="todoInput"
-        />
-        <button type="submit">Add</button>
+        <input ref={inputRef} type="text" name="todoInput" />
+        <button type="submit">{editItem ? "Edit" : "Submit"}</button>
       </form>
     </div>
   );

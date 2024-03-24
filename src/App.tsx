@@ -9,17 +9,18 @@ export interface ITodo {
 
 function App() {
   const [todoList, setTodoList] = useState<ITodo[]>([]);
+  const [isEditTodo, setIsEditTodo] = useState<ITodo | undefined>();
 
-  const onTodoInput = (input: string) => {
-    const newTodo: ITodo = {
-      index: new Date().valueOf(),
-      todoValue: input,
-    };
-    setTodoList([...todoList, newTodo]);
+  const onTodoInput = (input: ITodo) => {
+    setTodoList([...todoList, input]);
   };
 
   const onTodoRemove = (todoList: ITodo[]) => {
     setTodoList(todoList);
+  };
+
+  const onTodoEdit = (todo: ITodo) => {
+    setIsEditTodo(todo);
   };
 
   return (
@@ -30,8 +31,12 @@ function App() {
         alignItems: "center",
       }}
     >
-      <InputTodo getInputSubmit={onTodoInput} />
-      <TodoList todoList={todoList} removeTodo={onTodoRemove} />
+      <InputTodo submit={onTodoInput} editItem={isEditTodo} />
+      <TodoList
+        todoList={todoList}
+        editItem={onTodoEdit}
+        removeTodo={onTodoRemove}
+      />
     </div>
   );
 }
