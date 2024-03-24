@@ -2,16 +2,25 @@ import React from "react";
 import { ITodo } from "../App";
 
 const InputTodo = ({
+  inputRef,
   submit,
   editItem,
 }: {
+  inputRef: React.RefObject<HTMLInputElement>;
   submit: (input: ITodo) => void;
   editItem: ITodo | undefined;
 }) => {
-  const inputRef = React.useRef<HTMLInputElement>(null);
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!inputRef.current) return;
+
+    if (editItem) {
+      editItem.todoValue = inputRef.current.value;
+      submit(editItem);
+      inputRef.current.value = "";
+      return;
+    }
 
     const newTodo: ITodo = {
       index: new Date().valueOf(),
