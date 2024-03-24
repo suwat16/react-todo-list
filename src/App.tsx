@@ -18,6 +18,10 @@ function App() {
     setTodoList([...todoList, newTodo]);
   };
 
+  const onTodoRemove = (todoList: ITodo[]) => {
+    setTodoList(todoList);
+  };
+
   return (
     <div
       style={{
@@ -27,7 +31,7 @@ function App() {
       }}
     >
       <InputTodo getInputSubmit={onTodoInput} />
-      <TodoList todoList={todoList} />
+      <TodoList todoList={todoList} removeTodo={onTodoRemove} />
     </div>
   );
 }
