@@ -53,7 +53,7 @@ function App() {
     >
       <InputTodo
         inputRef={inputRef}
-        submit={onTodoInput}
+        onFinish={onTodoInput}
         editItem={isEditTodo}
       />
       <TodoList

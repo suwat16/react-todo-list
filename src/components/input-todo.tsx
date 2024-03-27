@@ -3,11 +3,11 @@ import { ITodo } from "../App";
 
 const InputTodo = ({
   inputRef,
-  submit,
+  onFinish,
   editItem,
 }: {
   inputRef: React.RefObject<HTMLInputElement>;
-  submit: (input: ITodo) => void;
+  onFinish: (input: ITodo) => void;
   editItem: ITodo | undefined;
 }) => {
   const handleSubmit = (e: React.FormEvent) => {
@@ -17,7 +17,7 @@ const InputTodo = ({
 
     if (editItem) {
       editItem.todoValue = inputRef.current.value;
-      submit(editItem);
+      onFinish(editItem);
       inputRef.current.value = "";
       return;
     }
@@ -27,7 +27,7 @@ const InputTodo = ({
       todoValue: inputRef.current?.value || "",
     };
 
-    submit(newTodo);
+    onFinish(newTodo);
     inputRef.current!.value = "";
     return;
   };
