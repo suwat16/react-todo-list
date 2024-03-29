@@ -1,47 +1,45 @@
-import React from "react";
+import { useEffect } from "react";
 import { ITodo } from "../App";
+import { useForm, SubmitHandler } from "react-hook-form";
 
-const InputTodo = ({
-  inputRef,
-  onFinish,
-  editItem,
-}: {
-  inputRef: React.RefObject<HTMLInputElement>;
-  onFinish: (input: ITodo) => void;
+interface IInputTodo {
   editItem: ITodo | undefined;
-}) => {
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  onFinish: (input: ITodo) => void;
+}
 
-    if (!inputRef.current) return;
+interface IUseFormInput {
+  todoValue: string;
+}
 
-    if (editItem) {
-      editItem.todoValue = inputRef.current.value;
-      onFinish(editItem);
-      inputRef.current.value = "";
-      return;
+export default function InputTodo({ editItem, onFinish }: IInputTodo) {
+  const { register, handleSubmit, reset, setValue } = useForm<IUseFormInput>();
+
+  useEffect(() => {
+    if (editItem?.todoValue) {
+      setValue("todoValue", editItem.todoValue);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editItem]);
+
+  const onSubmit: SubmitHandler<IUseFormInput> = (data) => {
+    if (!data.todoValue) return;
 
     const newTodo: ITodo = {
       index: new Date().valueOf(),
-      todoValue: inputRef.current?.value || "",
+      todoValue: data.todoValue,
     };
-
     onFinish(newTodo);
-    inputRef.current!.value = "";
-    return;
+    reset();
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form name="inputForm" onSubmit={handleSubmit(onSubmit)}>
         <label>Todo List</label>
         <br />
-        <input ref={inputRef} type="text" name="todoInput" />
+        <input {...register("todoValue")} />
         <button type="submit">{editItem ? "Edit" : "Submit"}</button>
       </form>
     </div>
   );
-};
-
-export default InputTodo;
+}

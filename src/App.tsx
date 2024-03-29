@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import InputTodo from "./components/input-todo";
 import TodoList from "./components/todo-list";
 
@@ -11,8 +11,6 @@ function App() {
   const [todoList, setTodoList] = useState<ITodo[]>([]);
   const [isEditTodo, setIsEditTodo] = useState<ITodo | undefined>();
 
-  const inputRef = React.useRef<HTMLInputElement>(null);
-
   const onTodoInput = (input: ITodo) => {
     if (isEditTodo) {
       const updatedTodoList = todoList.map((todo) => {
@@ -24,7 +22,6 @@ function App() {
 
       setTodoList(updatedTodoList);
       setIsEditTodo(undefined);
-      inputRef.current!.value = "";
       return;
     }
 
@@ -39,7 +36,6 @@ function App() {
 
   const onTodoEdit = (todo: ITodo) => {
     setIsEditTodo(todo);
-    inputRef.current!.value = todo.todoValue || "";
     return;
   };
 
@@ -51,11 +47,7 @@ function App() {
         alignItems: "center",
       }}
     >
-      <InputTodo
-        inputRef={inputRef}
-        onFinish={onTodoInput}
-        editItem={isEditTodo}
-      />
+      <InputTodo onFinish={onTodoInput} editItem={isEditTodo} />
       <TodoList
         todoList={todoList}
         editItem={onTodoEdit}
