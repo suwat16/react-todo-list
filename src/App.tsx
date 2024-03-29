@@ -47,8 +47,8 @@ function App() {
         alignItems: "center",
       }}
     >
-      <InputTodo onFinish={onTodoInput} editItem={isEditTodo} />
-      <TodoList
+              <InputTodo onFinish={onTodoInput} editItem={isEditTodo} />
+<TodoList
         todoList={todoList}
         editItem={onTodoEdit}
         removeTodo={onTodoRemove}
